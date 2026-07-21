@@ -1,0 +1,19 @@
+# Virtual Environments
+drone_env/
+venv/
+env/
+
+# Python Cache
+__pycache__/
+*.pyc
+
+# AI Model Weights
+*.pt
+
+# VS Code Settings
+.vscode/
+
+# Simulator Files (Uncomment and edit the name below if your Blocks environment is inside your project folder)
+Blocks/
+# WindowsNoEditor/
+# *.exe
