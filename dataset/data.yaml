@@ -1,0 +1,5 @@
+names:
+- drone
+nc: 1
+train: D:\AI_Drone_Intelligence_System\dataset\images\train
+val: D:\AI_Drone_Intelligence_System\dataset\images\train
