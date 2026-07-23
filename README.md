@@ -1,42 +1,22 @@
-# Autonomous AI Swarm Intelligence Architecture
+# 🚁 Autonomous Drone Logistics & Swarm Ground Control Station (GCS)
 
-An enterprise-grade autonomous drone swarm tracking system built in Python. This project bridges deep learning and physical kinematics by utilizing a custom-trained YOLOv8 neural network to drive a visual servoing P-Controller, enabling real-time, GPS-denied target pursuit within the Unreal Engine AirSim environment.
+A robust Python-based desktop Ground Control Station (GCS) for autonomous drone delivery, swarm behavior simulation, and machine learning data harvesting. Built on top of Microsoft's **AirSim** and **Unreal Engine**, this project bridges the gap between simulated physics and real-world logistics applications, with a strong focus on AI integration and cybernetics.
 
-## 🧠 Core Architecture
+## ✨ Key Features
 
-* **Custom AI Edge Inference:** A YOLOv8 Convolutional Neural Network trained from scratch on custom-harvested simulator datasets to detect and bound dynamic aerial targets.
-* **Visual Servoing Kinematics:** A Proportional Controller (P-Controller) that translates raw pixel coordinates into physical yaw and pitch velocities, creating a fully autonomous hunter-killer tracking loop.
-* **Dynamic Spatial Navigation:** A* pathfinding algorithms that recalculate spatial matrices to evade dynamic obstacles.
-* **Stereo Vision Depth Mapping:** Epipolar geometry and SIFT feature matching to extract depth data from 2D image frames.
-* **Asynchronous Ground Control:** A multithreaded Ground Control Station (GCS) providing real-time telemetry, GPS radar, and HUD overlays.
+* **Interactive GIS Dashboard:** Utilizes `tkintermapview` for a real-time, Google Maps-style interface. 
+* **Live Telemetry & Tracking:** Independent, thread-safe telemetry pinging that translates AirSim Cartesian coordinates (X, Y, Z) into real-world GPS coordinates (Lat, Lon) for live mapping.
+* **Autonomous Dispatch:** Point-and-click deployment. The drone automatically calculates the route, takes off, navigates at a calculated cruising altitude, and lands at the destination.
+* **Swarm Data Harvesting:** Includes automated scripts (`swarm_data_harvester.py`) for collecting multi-angle dataset images.
+* **Computer Vision Integration:** Ready pipeline for training custom YOLO object detection models on the harvested dataset (`swarm_yolo_trainer.py`).
 
-## 🛠️ Tech Stack
+## 📂 Repository Structure
 
-* **Language:** Python 3.10+
-* **Deep Learning:** Ultralytics YOLOv8, PyTorch
-* **Computer Vision:** OpenCV, NumPy
-* **Simulation Engine:** Microsoft AirSim (Unreal Engine 4/5)
-* **RPC Protocol:** Msgpack
-
-## 🚀 Execution Pipeline
-
-### 1. Data Harvesting
-The system autonomously deploys Drone 1 to strafe and capture raw RGB frames of Drone 2. Background/negative samples are retained to train out false positives.
-`python swarm_data_harvester.py`
-
-### 2. Neural Network Training
-Automatically structures the annotated YOLO dataset and trains the `yolov8n.pt` base model, exporting a highly optimized `best.pt` weights file for edge inference.
-`python swarm_yolo_trainer.py`
-
-### 3. Live Visual Servoing (Live Inference)
-Injects the trained AI weights into Drone 1's visual cortex. The system calculates the centroid of the AI bounding box and feeds the error delta directly into the drone's velocity motors to maintain target lock.
-`python swarm_visual_servoing.py`
-
-## ⚙️ Control Systems Math (The P-Controller)
-
-The visual servoing loop relies on proportional error calculation to drive the drone without GPS waypoints:
-* **Yaw Control:** `yaw_rate = (box_center_x - image_center_x) * k_yaw`
-* **Pitch Control:** `forward_velocity = (target_box_area - current_box_area) * k_pitch`
-
-## 👨‍💻 Developer
-**Manthan Sontakke**  
+```text
+├── dataset/                     # Harvested image data for YOLO training
+├── runs/                        # YOLO training weights and validation outputs
+├── delivery_dashboard.py        # Core autonomous logistics Ground Control UI
+├── swarm_dashboard.py           # Multi-drone swarm simulation controller
+├── swarm_data_harvester.py      # Automated script for generating ML datasets
+├── swarm_yolo_trainer.py        # Object detection model training pipeline
+└── README.md                    # Project documentation
